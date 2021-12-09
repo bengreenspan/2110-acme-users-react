@@ -6,19 +6,15 @@ class Sandwich extends Component{
   constructor(){
     super();
     this.state = {
-      sandwich: {} 
+      sandwich: {}
     };
   }
 
-  componentDidMount(){
-    console.log(this.props)
-  }
 
-//   async componentDidMount(){
-//       console.log(this.props);
-// //     const sandwich = (await axios.get(`/api/sandwiches/${this.props.selectedSandwich}`)).data;
-// //    console.log(sandwich);
-//   }
+  async componentDidMount(){
+    const sandwich = (await axios.get(`/api/sandwiches/${this.props.selectedSandwich}`)).data;
+ this.setState({ Sandwich });
+  }
 
 // //   async componentDidUpdate(prevProps){
 // //     if(prevProps.selectedId !== this.props.selectedId){
@@ -28,12 +24,12 @@ class Sandwich extends Component{
 // //   }
 
 render(){
-// const { sandwich } = this.state;
+const { sandwich } = this.state;
     return (
-    <hr />
-
-      
-    
+    <div> 
+      test
+{ Sandwich }
+    </div>
     );
   }
 }

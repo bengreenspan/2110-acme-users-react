@@ -40,7 +40,7 @@ render(){
          <div>
     
          {
-                 !!selectedSandwich && <Sandwich selectedSandwich={ Sandwich }/>
+           !!selectedSandwich && <Sandwich selectedSandwich={ this.state.selectedSandwich }/>
          }
     
         </div>
