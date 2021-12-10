@@ -6,29 +6,33 @@ class Sandwich extends Component{
   constructor(){
     super();
     this.state = {
-      sandwich: {}
+      sandwich: {},
+      selectedSandwich: {}
     };
   }
 
-
   async componentDidMount(){
     const sandwich = (await axios.get(`/api/sandwiches/${this.props.selectedSandwich}`)).data;
- this.setState({ Sandwich });
+ this.setState({ sandwich });
+
+ console.log(this)
+
   }
 
-// //   async componentDidUpdate(prevProps){
-// //     if(prevProps.selectedId !== this.props.selectedId){
-// //       const sandwich = (await axios.get(`/api/users/${this.props.selectedSandwich}`)).data;
-// //       this.setState({ sandwich });
-// //     }
-// //   }
+  async componentDidUpdate(prevProps){
+    if(prevProps.selectedSandwich !== this.props.selectedSandwich){
+      const sandwich = (await axios.get(`/api/sandwiches/${this.props.selectedSandwich}`)).data;
+      this.setState({ sandwich });
+    }
+  }
 
 render(){
 const { sandwich } = this.state;
     return (
     <div> 
-      test
-{ Sandwich }
+      {
+        sandwich.ingredients
+      }
     </div>
     );
   }

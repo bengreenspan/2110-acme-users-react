@@ -1,7 +1,8 @@
 const { syncAndSeed, models: { Sandwich } } = require('./db');
-
 const express = require('express');
+
 const app = express();
+
 const path = require('path');
 
 
@@ -11,6 +12,18 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
+
+app.post('/add', async (req, res, next) =>{
+  const sandwich = await Sandwich.create(req.body)
+  res.send(await Sandwich.create({}))
+} )
+
+app.delete('/delete/:id', async (req, res, next) =>{
+  const eatenSandwich = await Sandwich.findByPk(req.params.id)
+  eatenSandwich.destroy()
+ res.sendStatus(204)
+})
+
 
 app.get('/api/sandwiches', async(req, res, next)=> {
   try {

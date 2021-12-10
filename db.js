@@ -1,4 +1,3 @@
-const { useReducer } = require('react');
 const Sequelize = require('sequelize');
 const { STRING, TEXT } = Sequelize;
 const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/sandreact');
@@ -6,27 +5,17 @@ const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/san
 const Sandwich = conn.define('sandwich', {
   name: STRING,
   ingredients: TEXT
-}, {
-    hooks: {
-        beforeCreate: function(sandwich){
-            if(!sandwich.ingredients){
-                sandwich.ingredients = `${sandwich.name} doesnt have ingred`;
-            }
-        }
-    }
 }
-
-
 )
-
-Sandwich.createWithName = (name) => Sandwich.create({name});
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
-  const [BuffaloChicken, Liverwurst, TurkeyClub] = await Promise.all(
-    ['Buffalo Chicken Sandwich', 'Liverwurst Sandwich', 'Turkey Club'].map(Sandwich.createWithName)
-  );
-//   console.log(TurkeyClub.get());
+  await Promise.all([
+    Sandwich.create({ name: 'Buffalo Chicken Sandwich', ingredients: 'The Buffalo Chicken Sandwich, Best ordered at a deli counter on a with light red onion, blue cheese crumble. Ingredients: Bread, Chicken, Blue Cheese, Lettuce, Tomato, Onion, Buffalo Sauce'}),
+    Sandwich.create({ name: 'Liverwurst Sandwich', ingredients: 'The Liverwurst Sandwich, Saucisse de foie de porc. Find it at McSorley\'s or Schaller & Weber. For sophisticated palates only. I think. Ingredients: Bread, Liverwurst, Onion, Mustard'}),
+    Sandwich.create({ name: 'Turkey Club', ingredients: 'The Turkey Club, Some people opine that Club is an acronym for Chicken, Lettuce Under Bread. Ingredients: Bread, Turkey, Bacon, Lettuce, Tomato, Mayo'})
+])
+     
 };
 
 
